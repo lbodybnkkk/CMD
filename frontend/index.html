@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMD FRAGRANCES — Spatial Glassmorphism Luxury</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            'gold': '#B8962C',
+            'gold-light': '#E8C355',
+            'glass-border': 'rgba(255, 255, 255, 0.25)',
+            'glass-bg': 'rgba(255, 255, 255, 0.45)',
+            'glass-dark': 'rgba(18, 16, 14, 0.65)'
+          },
+          fontFamily: {
+            'display': ['Playfair Display', 'serif'],
+            'arabic': ['Cairo', 'sans-serif'],
+            'sans': ['Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    body {
+      background: #0f0d0b;
+      color: #f7efeb;
+      font-family: 'Cairo', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* Dynamic Mesh Gradient Background */
+    .mesh-background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at 20% 20%, rgba(184, 150, 44, 0.25), transparent 40%),
+                  radial-gradient(circle at 80% 30%, rgba(116, 91, 0, 0.3), transparent 50%),
+                  radial-gradient(circle at 50% 80%, rgba(232, 195, 85, 0.15), transparent 45%),
+                  radial-gradient(circle at 90% 90%, rgba(44, 33, 5, 0.8), transparent 50%);
+      filter: blur(60px);
+      animation: meshShift 12s ease-in-out infinite alternate;
+    }
+    
+    @keyframes meshShift {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.15) rotate(4deg); }
+    }
+
+    /* Spatial 3D Glassmorphism Panel */
+    .spatial-glass {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+      border-radius: 1.5rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .spatial-glass:hover {
+      border-color: rgba(184, 150, 44, 0.4);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45), inset 0 1px 3px rgba(255, 255, 255, 0.5), 0 0 30px rgba(184, 150, 44, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .modal-backdrop.active { opacity: 1; pointer-events: auto; }
+
+    .shimmer-gold {
+      background: linear-gradient(90deg, #B8962C 0%, #E8C355 50%, #B8962C 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite linear;
+    }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col antialiased selection:bg-gold selection:text-black">
+
+  <div class="mesh-background"></div>
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full z-50 px-6 py-4">
+    <div class="max-w-7xl mx-auto spatial-glass px-6 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-gold text-3xl">crown</span>
+        <span class="font-display font-bold text-xl tracking-widest text-gold">CMD FRAGRANCES</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="toggleAdminView()" id="adminToggleBtn" class="p-2.5 rounded-full hover:bg-white/10 transition-colors text-gold">
+          <span class="material-symbols-outlined">dashboard</span>
+        </button>
+        <button onclick="toggleCart()" class="relative p-2.5 rounded-full hover:bg-white/10 transition-colors text-gold">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span id="cartBadge" class="absolute -top-1 -right-1 bg-gold text-black font-bold text-[11px] w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow pt-28 px-6 max-w-7xl mx-auto w-full">
+
+    <!-- STOREFRONT SECTION -->
+    <section id="storefrontView" class="space-y-12">
+      <div class="text-center space-y-4 pt-8">
+        <span class="text-xs font-bold tracking-[0.3em] uppercase text-gold">Spatial Luxury Collection</span>
+        <h1 class="text-4xl md:text-6xl font-black font-display text-white">تشكيلة العطور الملكية</h1>
+        <p class="text-white/60 max-w-lg mx-auto text-sm">استكشف النوتات العطرية النادرة المجهزة بتركيزات عالية الضمان.</p>
+      </div>
+
+      <!-- Catalog Grid -->
+      <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+
+    <!-- SPATIAL GLASSMOPHIC ADMIN DASHBOARD -->
+    <section id="adminDashboardView" class="hidden space-y-10 py-6">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 class="text-3xl font-black text-white font-display">لوحة التحكم الفضائية (Spatial Admin)</h2>
+          <p class="text-xs text-white/50">إدارة المبيعات، الطلبات والمخزون ببيانات حية</p>
+        </div>
+        <button onclick="openAddProductModal()" class="shimmer-gold text-black font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg">
+          <span class="material-symbols-outlined text-sm">add</span> إضافة منتج
+        </button>
+      </div>
+
+      <!-- 3D Metrics Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="spatial-glass p-6 space-y-2">
+          <div class="flex justify-between text-white/50 text-xs"><span>إجمالي الأرباح</span><span class="material-symbols-outlined text-gold">payments</span></div>
+          <p id="metricRevenue" class="text-3xl font-black text-gold">0 EGP</p>
+        </div>
+        <div class="spatial-glass p-6 space-y-2">
+          <div class="flex justify-between text-white/50 text-xs"><span>الطلبات الواردة</span><span class="material-symbols-outlined text-gold">receipt_long</span></div>
+          <p id="metricOrders" class="text-3xl font-black text-white">0</p>
+        </div>
+        <div class="spatial-glass p-6 space-y-2">
+          <div class="flex justify-between text-white/50 text-xs"><span>قطع المخزون</span><span class="material-symbols-outlined text-gold">inventory_2</span></div>
+          <p id="metricStock" class="text-3xl font-black text-white">0</p>
+        </div>
+        <div class="spatial-glass p-6 space-y-2">
+          <div class="flex justify-between text-white/50 text-xs"><span>المنتجات المسجلة</span><span class="material-symbols-outlined text-gold">flask</span></div>
+          <p id="metricProducts" class="text-3xl font-black text-white">0</p>
+        </div>
+      </div>
+
+      <!-- Glowing Analytics Chart -->
+      <div class="spatial-glass p-6 space-y-4">
+        <h3 class="text-sm font-bold text-white/80">مؤشر الإيرادات الأسبوعي</h3>
+        <div class="h-64 w-full">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Orders Data Table -->
+      <div class="spatial-glass overflow-hidden">
+        <div class="p-6 border-b border-white/10"><h3 class="font-bold text-white">إدارة الطلبات الحية</h3></div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead class="bg-white/5 text-gold text-xs uppercase tracking-wider">
+              <tr>
+                <th class="p-4">الكود</th>
+                <th class="p-4">العميل</th>
+                <th class="p-4">الهاتف</th>
+                <th class="p-4">المحافظة</th>
+                <th class="p-4">الإجمالي</th>
+                <th class="p-4">الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersTable" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CART SLIDE PANEL -->
+  <div id="cartPanel" class="fixed top-0 right-0 h-full w-full max-w-md bg-black/80 backdrop-blur-3xl z-50 border-l border-white/10 translate-x-full transition-transform duration-500 p-6 flex flex-col">
+    <div class="flex justify-between items-center pb-6 border-b border-white/10">
+      <h3 class="font-bold text-lg text-white flex items-center gap-2"><span class="material-symbols-outlined text-gold">shopping_bag</span> سلة التسوق</h3>
+      <button onclick="toggleCart()" class="text-white/50 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div id="cartItemsContainer" class="flex-grow overflow-y-auto py-6 space-y-4"></div>
+    <div id="cartFooter" class="border-t border-white/10 pt-6 space-y-4 hidden">
+      <div class="flex justify-between text-sm"><span>الإجمالي:</span><span id="cartTotalText" class="font-bold text-gold text-xl">0 EGP</span></div>
+      <button onclick="submitOrder()" class="shimmer-gold w-full py-4 text-black font-bold rounded-xl text-xs uppercase tracking-wider">تأكيد الشراء عبر السيرفر</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    const API_BASE = "http://localhost:8000/api/v1";
+    let state = { products: [], cart: [], orders: [], isAdmin: false };
+    let chartInstance = null;
+
+    async function initApp() {
+      await fetchProducts();
+      initChart();
+      renderStorefront();
+    }
+
+    async function fetchProducts() {
+      try {
+        const res = await fetch(`${API_BASE}/products`);
+        if(res.ok) state.products = await res.json();
+      } catch(e) {
+        console.warn("Backend unavailable, using Local Fallback.");
+        state.products = [
+          { id: 1, name: "Royal Oud Elixir", brand: "CMD", concentration: "Extrait de Parfum", price: 8500, stock: 12, images: ["https://images.unsplash.com/photo-1541643600914-78b084683601?w=600"] }
+        ];
+      }
+    }
+
+    function renderStorefront() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = state.products.map(p => `
+        <div class="spatial-glass p-5 space-y-4 flex flex-col justify-between">
+          <div class="relative h-64 rounded-xl overflow-hidden">
+            <img src="${DOMPurify.sanitize(p.images[0] || '')}" class="w-full h-full object-cover">
+            <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md border border-white/20 text-gold text-[10px] px-3 py-1 rounded-full font-bold uppercase">${DOMPurify.sanitize(p.concentration)}</span>
+          </div>
+          <div class="space-y-1">
+            <p class="text-xs text-gold uppercase tracking-wider font-semibold">${DOMPurify.sanitize(p.brand)}</p>
+            <h3 class="text-lg font-bold text-white">${DOMPurify.sanitize(p.name)}</h3>
+            <p class="text-xl font-black text-gold">${p.price.toLocaleString()} EGP</p>
+          </div>
+          <button onclick="addToCart(${p.id})" class="w-full py-3 rounded-xl border border-gold/40 hover:bg-gold hover:text-black font-bold text-xs transition-all uppercase tracking-wider">أضف للسلة</button>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(pid) {
+      const p = state.products.find(x => x.id === pid);
+      if(!p) return;
+      const exist = state.cart.find(x => x.productId === pid);
+      if(exist) exist.quantity++;
+      else state.cart.push({ productId: pid, quantity: 1, product: p });
+      updateCartUI();
+      toggleCart(true);
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cartItemsContainer');
+      const badge = document.getElementById('cartBadge');
+      const totalText = document.getElementById('cartTotalText');
+      const footer = document.getElementById('cartFooter');
+
+      const count = state.cart.reduce((s, x) => s + x.quantity, 0);
+      badge.textContent = count;
+      badge.classList.toggle('hidden', count === 0);
+
+      if(!state.cart.length) {
+        container.innerHTML = `<p class="text-center text-white/40 py-10">السلة فارغة</p>`;
+        footer.classList.add('hidden');
+        return;
+      }
+
+      let total = 0;
+      container.innerHTML = state.cart.map(i => {
+        const itemTotal = i.product.price * i.quantity;
+        total += itemTotal;
+        return `
+          <div class="flex justify-between items-center p-3 spatial-glass">
+            <div>
+              <p class="font-bold text-sm text-white">${DOMPurify.sanitize(i.product.name)}</p>
+              <p class="text-xs text-gold">${i.quantity} × ${i.product.price} EGP</p>
+            </div>
+            <p class="font-bold text-sm text-white">${itemTotal} EGP</p>
+          </div>
+        `;
+      }).join('');
+
+      totalText.textContent = `${total.toLocaleString()} EGP`;
+      footer.classList.remove('hidden');
+    }
+
+    function toggleCart(open) {
+      const panel = document.getElementById('cartPanel');
+      if(open === undefined) panel.classList.toggle('translate-x-full');
+      else if(open) panel.classList.remove('translate-x-full');
+      else panel.classList.add('translate-x-full');
+    }
+
+    async function submitOrder() {
+      const payload = {
+        full_name: "عميل تجريبي",
+        phone: "01012345678",
+        governorate: "القاهرة",
+        address: "شارع النصر الرئيسي، المعادي",
+        items: state.cart.map(i => ({ product_id: i.productId, quantity: i.quantity }))
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/orders`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if(res.ok) {
+          alert(`تم تأكيد طلبك بنجاح! كود التتبع: ${data.tracking_code}`);
+          state.cart = [];
+          updateCartUI();
+          toggleCart(false);
+        } else alert(`فشل الطلب: ${data.detail}`);
+      } catch(e) {
+        alert("فشل الاتصال بالسيرفر");
+      }
+    }
+
+    function toggleAdminView() {
+      state.isAdmin = !state.isAdmin;
+      document.getElementById('storefrontView').classList.toggle('hidden', state.isAdmin);
+      document.getElementById('adminDashboardView').classList.toggle('hidden', !state.isAdmin);
+      if(state.isAdmin) fetchAdminOrders();
+    }
+
+    async function fetchAdminOrders() {
+      try {
+        const res = await fetch(`${API_BASE}/orders`);
+        if(res.ok) {
+          state.orders = await res.json();
+          renderAdminOrders();
+        }
+      } catch(e) { console.warn("Admin fetch failed."); }
+    }
+
+    function renderAdminOrders() {
+      const table = document.getElementById('adminOrdersTable');
+      let totalRev = 0;
+      table.innerHTML = state.orders.map(o => {
+        if(o.status === 'Delivered') totalRev += o.total_amount;
+        return `
+          <tr class="hover:bg-white/5 transition-colors">
+            <td class="p-4 font-bold text-gold">${DOMPurify.sanitize(o.tracking_code)}</td>
+            <td class="p-4 text-white">${DOMPurify.sanitize(o.full_name)}</td>
+            <td class="p-4 text-white/70">${DOMPurify.sanitize(o.phone)}</td>
+            <td class="p-4 text-white/70">${DOMPurify.sanitize(o.governorate)}</td>
+            <td class="p-4 font-bold text-gold">${o.total_amount} EGP</td>
+            <td class="p-4"><span class="px-3 py-1 rounded-full text-[10px] font-bold bg-gold/20 text-gold">${DOMPurify.sanitize(o.status)}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('metricRevenue').textContent = `${totalRev.toLocaleString()} EGP`;
+      document.getElementById('metricOrders').textContent = state.orders.length;
+      document.getElementById('metricProducts').textContent = state.products.length;
+    }
+
+    function initChart() {
+      const ctx = document.getElementById('revenueChart').getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+      gradient.addColorStop(0, 'rgba(184, 150, 44, 0.4)');
+      gradient.addColorStop(1, 'rgba(184, 150, 44, 0.0)');
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+          datasets: [{
+            label: 'الإيرادات',
+            data: [12000, 19000, 15000, 28000, 22000, 35000, 42000],
+            borderColor: '#B8962C',
+            borderWidth: 3,
+            fill: true,
+            backgroundColor: gradient,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.5)' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)' } }
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
